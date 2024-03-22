@@ -12,7 +12,7 @@ export default class Search extends Component {
 		//发送请求前通知 List 更新状态
     PubSub.publish('hi', { isFirst: false, isLoading: true })
 
-    // //#region 
+    //#region 
     // // 1. send request - axios
     // axios.get(`https://api.github.com/search/users?q=${keyWord}`).then(
     //   response => { 
@@ -24,7 +24,7 @@ export default class Search extends Component {
     //     PubSub.publish('hi', { err: error.message, isLoading: false });
     //    }
     // )
-    // //#endregion
+    //#endregion
 
     //#region 
     // 2. send request - fetch （未优化版本）
