@@ -1,0 +1,127 @@
+<!-- 
+  
+  数据类型转换
+
+https://zhuanlan.zhihu.com/p/85731460 看看面试题
+https://www.w3school.com.cn/js/js_type_conversion.asp 本html文档是根据这个写的
+
+
+Number() 转换数值，String() 转换字符串，Boolean() 转换布尔值。
+
+JavaScript 中有五种可包含值的数据类型：
+字符串（string）
+数字（number）
+布尔（boolean）
+对象（object）
+函数（function）
+
+有三种对象类型：
+对象（Object）
+日期（Date）
+数组（Array）
+
+同时有两种不能包含值的数据类型：
+null
+undefined 
+-->
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>JavaScript typeof 运算符</h2>
+
+<p>typeof 运算符返回变量、对象、函数或表达式的类型。</p>
+
+<p id="typeof"></p>
+
+
+<h2>JavaScript constructor 属性</h2>
+<p>constructor 属性返回变量或对象的构造器函数。</p>
+<p>这个“自制的” isArray() 函数在数组上使用时返回 true：</p>
+<p id="constructor"></p>
+
+
+<h2> JavaScript 类型转换 </h2>
+<p> 一元 + 运算符 </p>
+<p id="one_var"></p>
+
+<!-- 
+  typeof 运算符
+
+  可以使用 typeof 运算符来确定 JavaScript 变量的数据类型。
+    请注意：
+    NaN 的数据类型是数值
+    数组的数据类型是对象
+    日期的数据类型是对象
+    null 的数据类型是对象
+    未定义变量的数据类型是 undefined
+    尚未赋值的变量的数据类型也是 undefined 
+-->
+<script>
+  document.getElementById("typeof").innerHTML = 
+    typeof "Bill"                 // 返回 "string"
+    typeof 3.14                   // 返回 "number"
+    typeof NaN                    // 返回 "number"
+    typeof false                  // 返回 "boolean"
+    typeof [1,2,3,4]              // 返回 "object"
+    typeof {name:'Bill', age:62}  // 返回 "object"
+    typeof new Date()             // 返回 "object"
+    typeof function () {}         // 返回 "function"
+    typeof myCar                  // 返回 "undefined" *
+    typeof null;                  // 返回 "object"
+
+</script>
+
+
+<!-- 
+  constructor 属性
+
+    constructor 属性返回所有 JavaScript 变量的构造器函数。 
+-->
+<script>
+  "Bill".constructor + "<br>" +                 // 返回 "function String()  { [native code] }"
+  (3.14).constructor + "<br>" +                 // 返回 "function Number()  { [native code] }"
+  false.constructor + "<br>" +                  // 返回 "function Boolean() { [native code] }"
+  [1,2,3,4].constructor + "<br>" +              // 返回 "function Array()   { [native code] }"
+  {name:'Bill', age:62}.constructor + "<br>" +  // 返回" function Object()  { [native code] }"
+  new Date().constructor + "<br>" +             // 返回 "function Date()    { [native code] }"
+  function () {}.constructor + "<br>"           // 返回 "function Function(){ [native code] }"
+</script>
+
+<!-- 可以通过检查 constructor 属性来确定某个对象是否为数组（包含单词 "Array") -->
+<script>
+  var fruits = ["Banana", "Orange", "Apple", "Mango"];
+  document.getElementById("constructor").innerHTML = isArray(fruits);
+  
+  function isArray(myArray) {
+    return myArray.constructor.toString().indexOf("Array") > -1;
+  }
+  // or 
+  function isArray2(myArray) {
+    return myArray.constructor === Array;
+  }
+</script>
+
+
+
+<!-- JavaScript 类型转换 -->
+
+<!-- 把数值转换为字符串 -->
+String(__)
+__.toString()
+
+<!-- 把字符串转换为数值 -->
+Number(__)
+
+<!-- 一元 + 运算符 
+     一元的 + 运算符可用于把变量转换为数字： -->
+  <script>
+  let y = "5";    // string
+  let x = + y;    // number
+  document.getElementById("one_var").innerHTML = typeof y + "<br>" + typeof x;
+  </script>
+
+      
+</body>
+</html>
