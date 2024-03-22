@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>...运算符draft</title>
+</head>
+<body>
+  <script type = "text/javascript">
+    let arr1 = [1, 3, 5, 7, 9]
+    let arr2 = [2, 4, 6, 8, 10]
+    console.log(...arr1);
+    let arr3 = [...arr1, ...arr2]
+    console.log(...arr3)
+
+    function sum(...numbers) {
+      return numbers.reduce((preValue, currentValue) => {
+        return preValue + currentValue
+      })
+    }
+    console.log(sum(1, 2, 3, 4));
+
+    let person = {name: 'Tom', age: 18}
+    let person2 = {...person}
+    person.name = 'Jerry'
+    console.log(person)
+    console.log(person2)
+
+  </script>
+</body>
+</html>

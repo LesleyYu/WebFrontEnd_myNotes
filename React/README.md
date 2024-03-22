@@ -90,6 +90,9 @@
 
 ### 02 [hello react](02_staging/02_src_hello_react/README.md)
 
+**使用方法：**
+把文件夹名字改成`src` 然后 `npm start`。以下文件夹同理。
+
 **知识点：样式的模块化**
 看/component/Hello下的两个文件：
 [index.jsx](02_staging/02_src_hello_react/components/Hello/index.jsx)

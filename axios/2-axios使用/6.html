@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> 6. axios interceptors </title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  </head>
+<body>
+  <script>
+    // 和Promise长得像。事实上其内部原理也是有Promise的什么什么来做指令的
+    // Add a request interceptor
+    axios.interceptors.request.use(function (config) {
+        // Do something before request is sent
+        console.log('请求拦截器 成功 - 1');
+        return config;
+        // throw '参数除了问题';   // 这里需要对Promise有一定了解！！补课！
+                              // 这句话会：请求器成功，但是拦截器失败
+      }, function (error) {
+        // Do something with request error
+        console.log("请求拦截器 失败 - 1");
+        return Promise.reject(error);
+      });
+
+    // Add a second request interceptor
+    // 加第二个来看执行顺序。顺序是2112. 请求拦截器是先进先执行，相应拦截器是后进后执行
+    axios.interceptors.request.use(function (config) {
+        // Do something before request is sent
+        console.log('请求拦截器 成功 - 2');
+
+        // 可以对config进行修改
+        config.params = {a: 100};
+        config.timeout = 2000;
+
+        // return config;
+        return config;
+      }, function (error) {
+        // Do something with request error
+        console.log("请求拦截器 失败 - 2");
+        return Promise.reject(error);
+      });
+
+    // Add a response interceptor
+    axios.interceptors.response.use(function (response) {
+        // Any status code that lie within the range of 2xx cause this function to trigger
+        console.log('响应拦截器 成功 - 1')
+        return response;
+      }, function (error) {
+        // Any status codes that falls outside the range of 2xx cause this function to trigger
+        console.log('响应拦截器 失败 - 1')
+        return Promise.reject(error);
+      });
+
+    // Add another response interceptor
+    axios.interceptors.response.use(function (response) {
+        // Any status code that lie within the range of 2xx cause this function to trigger
+        console.log('响应拦截器 成功 - 2')
+        return response;
+        // return response.data;
+      }, function (error) {
+        // Any status codes that falls outside the range of 2xx cause this function to trigger
+        console.log('响应拦截器 失败 - 2')
+        return Promise.reject(error);
+      });
+
+
+    axios({
+      method: 'GET',
+      url: 'http://localhost:3000/posts',
+    }).then(response => {
+      console.log('自定义回调处理成功的结果');
+      console.log(response);
+    }).catch(reason => {
+      console.log('自定义失败的回调');
+      console.log(reason);
+    })
+  </script>
+</body>
+</html>
