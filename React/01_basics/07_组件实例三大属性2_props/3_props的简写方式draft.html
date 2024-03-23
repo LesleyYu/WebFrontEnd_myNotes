@@ -21,37 +21,40 @@
 
 	<script type="text/babel">
     class Person extends React.Component{
-      // state = {name: 'Tom', age: 18, sex: 'F'}
-      render() {
-      const {name, age, sex} = this.props
-        return (
-          <ul>
-            <li>姓名：{name}</li>  
-            <li>性别：{sex}</li>
-            <li>年龄：{age+1}</li>
-          </ul>
-        )
-      }
-    
+
+      // 类中的构造器，能省略则省略
+
     	//对标签属性进行类型、必要性的限制
       static propTypes = {
         name: PropTypes.string.isRequired,
-        sex: PropTypes.string,
+        gender: PropTypes.string,
         age: PropTypes.number,
         speak: PropTypes.func,
       }
       
       static defaultProps = {
-        sex:'Unknown',
+        gender:'Unknown',
         age: -1,
+      }
+
+      // state = {name: 'Tom', age: 18, gender: 'F'}
+      render() {
+      const {name, age, gender} = this.props
+        return (
+          <ul>
+            <li>姓名：{name}</li>  
+            <li>性别：{gender}</li>
+            <li>年龄：{age+1}</li>
+          </ul>
+        )
       }
     }
 
-    ReactDOM.render(<Person name = 'Jerry'  sex = 'M' speak = {speak}/>,document.getElementById('test1'))
-    ReactDOM.render(<Person name = 'tom' age = {21} sex = 'M'/>,document.getElementById('test2'))
+    ReactDOM.render(<Person name = 'Jerry'  gender = 'M' speak = {speak}/>,document.getElementById('test1'))
+    ReactDOM.render(<Person name = 'tom' age = {21} gender = 'M'/>,document.getElementById('test2'))
 
-    const p = {name: "老刘", age: 18, sex: 'F'}
-    // ReactDOM.render(<Person name = '老刘' age = '30' sex = 'F'/>,document.getElementById('test3'))
+    const p = {name: "老刘", age: 18, gender: 'F'}
+    // ReactDOM.render(<Person name = '老刘' age = '30' gender = 'F'/>,document.getElementById('test3'))
     ReactDOM.render(<Person {...p}/>,document.getElementById('test3'))
 
     function speak() {

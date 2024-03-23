@@ -1116,7 +1116,7 @@ react提供了一个用于创建react项目的脚手架库：create-react-app
 
 ![不是内部命令](./react/1611803687193.png)
 
-这样可以直接使用：npx create-react-app 项目名 
+这样可以直接使用：npx create-react-app 项目名
 
 3.等待下载完成，进入项目文件夹，运行一下
 

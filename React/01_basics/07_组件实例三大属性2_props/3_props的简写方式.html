@@ -35,25 +35,23 @@
 			//对标签属性进行类型、必要性的限制
 			static propTypes = {
 				name:PropTypes.string.isRequired, //限制name必传，且为字符串
-				sex:PropTypes.string,//限制sex为字符串
+				gender:PropTypes.string,//限制gender为字符串
 				age:PropTypes.number,//限制age为数值
 			}
 
 			//指定默认标签属性值
 			static defaultProps = {
-				sex:'男',//sex默认值为男
-				age:18 //age默认值为18
+				gender:'Unknown',	//gender默认值为unknown
+				age:18 	//age默认值为18
 			}
 			
 			render(){
 				// console.log(this);
-				const {name,age,sex} = this.props
-				//props是只读的
-				//this.props.name = 'jack' //此行代码会报错，因为props是只读的
+				const {name,age,gender} = this.props
 				return (
 					<ul>
 						<li>姓名：{name}</li>
-						<li>性别：{sex}</li>
+						<li>性别：{gender}</li>
 						<li>年龄：{age+1}</li>
 					</ul>
 				)

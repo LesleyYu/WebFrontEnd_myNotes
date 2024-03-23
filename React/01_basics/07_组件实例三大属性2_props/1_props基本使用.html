@@ -22,23 +22,23 @@
 		class Person extends React.Component{
 			render(){
 				// console.log(this);
-				const {name,age,sex} = this.props
+				const {name,age,gender} = this.props
 				return (
 					<ul>
 						<li>姓名：{name}</li>
-						<li>性别：{sex}</li>
+						<li>性别：{gender}</li>
 						<li>年龄：{age+1}</li>
 					</ul>
 				)
 			}
 		}
 		//渲染组件到页面
-		ReactDOM.render(<Person name="jerry" age={19}  sex="男"/>,document.getElementById('test1'))
-		ReactDOM.render(<Person name="tom" age={18} sex="女"/>,document.getElementById('test2'))
+		ReactDOM.render(<Person name="jerry" age={19}  gender="男"/>,document.getElementById('test1'))
+		ReactDOM.render(<Person name="tom" age={18} gender="女"/>,document.getElementById('test2'))
 
-		const p = {name:'老刘',age:18,sex:'女'}
+		const p = {name:'老刘',age:18,gender:'女'}
 		// console.log('@',...p);
-		// ReactDOM.render(<Person name={p.name} age={p.age} sex={p.sex}/>,document.getElementById('test3'))
+		// ReactDOM.render(<Person name={p.name} age={p.age} gender={p.gender}/>,document.getElementById('test3'))
 		ReactDOM.render(<Person {...p}/>,document.getElementById('test3'))
 	</script>
 </body>

@@ -1,28 +1,1201 @@
+
+欢迎！
+这里是莱斯利学习React的笔记！
+---
+
 # React
+
+**react是什么？**
+
+React用于构建用户界面的JS库。是一个将数据渲染为HTML视图的开源JS库。
+
+**为什么学？**
+
+1.原生JS操作DOM繁琐，效率低
+
+2.使用JS直接操作DOM,浏览器会进行大量的重绘重排
+
+3.原生JS没有组件化编码方案，代码复用低
+
+> 在学习之前最好看一下关于npm的知识：
+>
+> [npm](https://blog.csdn.net/qq_25502269/article/details/79346545)
 
 ## Basics
 
-### setState
+### 01 React 基础案例
 
-#### setState更新状态的2种写法
+1.先导入三个包：
 
-  (1). setState(stateChange, [callback])------对象式的setState
-            1.stateChange为状态改变对象(该对象可以体现出状态的更改)
-            2.callback是可选的回调函数, 它在状态更新完毕、界面也更新后(render调用后)才被调用
+【先引入react.development.js，后引入react-dom.development.js】
 
-  (2). setState(updater, [callback])------函数式的setState
-            1.updater为返回stateChange对象的函数。
-            2.updater可以接收到state和props。
-            4.callback是可选的回调函数, 它在状态更新、界面也更新后(render调用后)才被调用。
-总结:
+``` cmd
+react.development.js
+react-dom.development.js
+babel.min.js 
+```
+
+2.创建一个容器
+
+3.创建虚拟DOM，渲染到容器中
+
+``` html
+<body>
+    <!-- 准备好容器 -->
+    <div id="test">
+
+    </div>
+</body>
+<!-- 引入依赖 ,引入的时候，必须就按照这个步骤-->
+<script src="../js/react.development.js" type="text/javascript"></script>
+<script src="../js/react-dom.development.js" type="text/javascript"></script>
+
+<script src="../js/babel.min.js" type="text/javascript"></script>
+
+<!--这里使用了babel用来解析jsx语法-->
+<script type="text/babel"> /* 此处一定要写babel，用于将jsx翻译成js */
+        // 1.创建虚拟DOM
+        const VDOM = (  /* 此处一定不要写引号 */
+          <h1 id="title">
+            <span>Hello,React</span>
+          </h1>
+        )
+        // 2.渲染，如果有多个渲染同一个容器，后面的会将前面的覆盖掉
+        ReactDOM.render(VDOM,document.getElementById("test"));        
+</script>
+</html>
+```
+
+这样，就会在页面中的这个div容器上添加这个h1.
+
+用js也可以创建虚拟DOM（不推荐）
+
+```js
+const VDOM = React.createElement(
+  'h1',
+  {id:'title'},
+  React.createElement(
+    'span',{},'Hello,React'
+  )
+)
+
+```
+
+### 03-04 JSX基础语法
+
+1.定义虚拟DOM，不能使用“”
+
+2.标签中混入JS表达式的时候使用{}
+
+3.样式的类名指定不要使用class，使用className
+
+4.内联样式要使用双大括号包裹
+
+5.不能有多个根标签，只能有一个跟标签
+
+6.标签必须闭合
+
+7.如果小写字母开头，就将标签转化为html同名元素，如果html中无该标签对应的元素，就报错；如果是大写字母开头，react就去渲染对应的组件，如果没有就报错
+
+---
+
+> 关于JS表达式和JS语句：
+> 注意区分：
+> 1.表达式：一个表达式会产生一个值，可以放在任何一个需要值的地方
+>	  下面这些都是表达式：
+>     (1). `a`
+>	    (2). `a+b`
+>     (3). `demo(1)`
+>     (4). `arr.map()`
+>	    (5). `function test () {}`
+> 2.语句(代码)：
+>	    下面这些都是语句(代码)：
+>     (1). `if(){}`
+>     (2). `for(){}`
+>     (3). `switch(){case:xxxx}`
+
+实例如下：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .sss{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <!-- 准备好容器 -->
+    <div id="test">
+        
+    </div>
+</body>
+<!-- 引入依赖 ,引入的时候，必须就按照这个步骤-->
+<script src="../js/react.development.js" type="text/javascript"></script>
+<script src="../js/react-dom.development.js" type="text/javascript"></script>
+
+<script src="../js/babel.min.js"></script>
+<!--这里使用了jsx来创建虚拟DOM-->
+<script type="text/babel">
+        const MyId = "title";
+        const MyData = "Cyk";
+        // 1.创建虚拟DOM
+        const VDOM = (
+            <h1 id = {MyId.toLocaleUpperCase()}>
+                <span className = "sss" style = {{fontSize:'50px'}}>
+                sss
+                </span>
+            </h1>
+        )
+        // 2.渲染，如果有多个渲染同一个容器，后面的会将前面的覆盖掉
+        ReactDOM.render(VDOM,document.getElementById("test"));
+</script>
+
+</html>
+```
+
+### 02 虚拟DOM的两种创建方式
+
+**1.使用JSX创建虚拟DOM**
+
+```jsx
+ const VDOM = (
+            <h1 id = {MyId.toLocaleUpperCase()}>
+                <span className = "sss" style = {{fontSize:'50px'}}>sss</span>
+            </h1>
+        )
+```
+
+这个在上面的案例中已经演示过了 ，下面看看另外一种创建虚拟DOM的方式
+
+**2.使用JS创建虚拟DOM**
+
+```js
+// 1.创建虚拟DOM[在这使用了js的语法]React.createElement(标签,标签属性,内容)
+const VDOM = React.createElement('h1',{id:"title"},"nihao")
+```
+
+使用JS和JSX都可以创建虚拟DOM，但是可以看出JS创建虚拟DOM比较繁琐，尤其是标签如果很多的情况下，所以还是比较推荐使用JSX来创建。
+
+#### 真实和虚拟DOM的区别
+
+运行 [这个文件](./01_basics/02_虚拟DOM的两种创建方式/3_虚拟DOM与真实DOM.html) 能在console中看到：
+![真实和虚拟DOM](./pics/真实和虚拟DOM.png)
+
+关于虚拟DOM：
+  1.本质是Object类型的对象（一般对象）
+  2.虚拟DOM比较“轻”，真实DOM比较“重”，因为虚拟DOM是React内部在用，无需真实DOM上那么多的属性。
+  3.虚拟DOM最终会被React转化为真实DOM，呈现在页面上。
+
+### 05 组件
+
+当应用是以多组件的方式实现，这个应用就是一个组件化的应用
+
+> **注意：** 组件名称必须以大写字母开头。
+>
+> React 会将以小写字母开头的组件视为原生 DOM 标签。例如，< div />` 代表 HTML 的 div 标签，而 `< Weclome /> 则代表一个组件，并且需在作用域内使用 `Welcome`
+>
+> 传递的参数，不能在组件中改动
+
+#### 函数式组件
+
+**例1**
+
+```js
+//1.先创建函数，函数可以没有参数，但是必须要有返回值 返回一个虚拟DOM
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+//2.进行渲染
+ReactDOM.Render(<Welcom name = "ss" />,document.getElementById("div"));
+```
+
+让我们来回顾一下这个例子中发生了什么：
+
+1. 我们调用 `ReactDOM.render()` 函数，并传入 ` <Welcome name="Sara" /> ` 作为参数。
+2. React 调用 `Welcome` 组件，并将 `{name: 'Sara'}` 作为 props 传入。
+3. `Welcome` 组件将 `Hello, Sara` 元素作为返回值。
+4. React DOM 将 DOM 高效地更新为 `Hello, Sara`。
+
+**例2**
+
+```js
+//1.创建函数式组件
+function MyComponent(){   //要大写！！！
+  console.log(this); //此处的this是undefined，不是window，因为babel编译后开启了严格模式
+  return <h2>我是用函数定义的组件(适用于【简单组件】的定义)</h2>
+}
+//2.渲染组件到页面
+ReactDOM.render(<MyComponent/>,document.getElementById('test'))   // 要写标签！
+```
+
+执行了`ReactDOM.render(<MyComponent/>.......)`之后，发生了什么？
+
+1. React解析组件标签，找到了MyComponent组件。
+2. 发现组件是使用函数定义的，随后调用该函数，将返回的虚拟DOM转为真实DOM，随后呈现在页面中。
+
+#### 类式组件(Class)
+
+```js
+//必须继承React.Component
+//然后重写Render()方法，该方法一定要有返回值，返回一个虚拟DOM
+class Welcome extends React.Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+//渲染。 这个跟之前也是一样的
+ReactDOM.Render(<Welcom name = "ss" />,document.getElementById("div"));
+```
+
+让我们来回顾一下这个例子中发生了什么：
+
+1. React解析组件标签，找到相应的组件
+2. 发现组件是类定义的，随后new出来的类的实例，并通过该实例调用到原型上的render方法
+3. 将render返回的虚拟DOM转化为真实的DOM,随后呈现在页面中
+
+render是放在哪里的？
+—— MyComponent的原型对象上，供实例使用。
+render中的this是谁？
+—— MyComponent的实例对象 <=> MyComponent组件实例对象。
+
+**注意**
+`this`关键字：
+
+- 在函数式组件内：
+运行 [1_函数式组件.html](./01_basics/05_react中定义组件/1_函数式组件.html) 之后得到 `undefined`，而不是window。因为babel编译后开启了严格模式。
+![函数式组件内的this](./pics/函数式组件内的this.png)
+
+- 在类式组件内：
+运行 [2_类式组件.html](./01_basics/05_react中定义组件/2_类式组件.html) 之后得到 类本身的这个东西：
+![类式组件内的this](./pics/类式组件内的this.png)
+
+#### 组件案例
+
+下面，我们通过一个案例更好的理解组件：【只关注与核心代码】
+
+我们发现组件是可以包含中使用的， 而且如果创建的数组，必须要代一个key。数组元素中使用的 key 在其兄弟节点之间应该是独一无二的。然而，它们不需要是全局唯一的。当我们生成两个不同的数组时，我们可以使用相同的 key 值
+
+```html
+<script type="text/babel">
+
+        //创建一个组件<li>
+        function GetLi(props){      
+            return <li>{props.value}</li>
+        };
+
+        // 1.创建类式组件<ul>
+        class MyComponent extends React.Component{
+            render(){
+                console.log(this.props.arr);
+                let com = this.props.arr.map((item,index)=>
+                     //在这个地方包含了GetLi这个组件，【注意不能用{}】
+                     //因为这个是一个列表，所以必须传递一个key【独一无二的Key】
+                     //key 帮助 React 识别哪些元素改变了，比如被添加或删除。
+                        <GetLi value={item} key = {index} />
+                    );
+                console.log(com);
+                return <ul>{com}</ul>
+            }
+        }
+        
+        let num = [1,2,3,4]
+        // 2.渲染组件
+        ReactDOM.render(<MyComponent  arr={num}/>,document.getElementById("test"));
+</script>
+```
+
+### 06-08 组件实例的三大属性
+
+#### state
+
+我们都说React是一个状态机，体现是什么地方呢，就是体现在state上，通过与用户的交互，实现不同的状态，然后去渲染UI,这样就让用户的数据和界面保持一致了。state是组件的私有属性。
+
+在React中，更新组件的state，结果就会重新渲染用户界面(不需要操作DOM),一句话就是说，用户的界面会随着状态的改变而改变。
+
+state是组件对象最重要的属性，值是对象（可以包含多个key-value的组合）
+
+**案例**：
+
+1.需求：页面显示【今天天气很炎热】，鼠标点击文字的时候，页面更改为【今天天气很凉爽】
+
+**A. 复杂写法**
+([原文件](./01_basics/06_组件实例三大属性1_state/1_state.html))
+要看懂这个文件需要一些js语法中对 [类的基本知识](./01_basics/react所需的js知识/1_类的基本知识.html) 的了解。
+
+```js
+//1.创建组件
+class Weather extends React.Component{
+  
+  //构造器调用几次？ ———— 1次
+  constructor(props){
+    console.log('constructor');
+    super(props)
+    //初始化状态
+    this.state = {isHot:false,wind:'微风'}
+    //解决changeWeather中this指向问题
+    this.changeWeather = this.changeWeather.bind(this)
+    /* 赋值语句 先看右边：实例对象没有changeWeather，所以去原型找，找到了，然后用bind
+        把this.changeWeather绑定到（左边）实例对象的this.changeWeatherh上 */
+  }
+
+  //render调用几次？ ———— 1+n次 1是初始化的那次 n是状态更新的次数
+  render(){
+    console.log('render');
+    //读取状态
+    const {isHot,wind} = this.state
+    return <h1 onClick={this.changeWeather}>今天天气很{isHot ? '炎热' : '凉爽'}，{wind}</h1>
+  }
+
+  //changeWeather调用几次？ ———— 点几次调几次
+  changeWeather(){
+    //changeWeather放在哪里？ ———— Weather的原型对象上，供实例使用
+    //由于changeWeather是作为onClick的回调，所以不是通过实例调用的，是直接调用
+    //类中的方法默认开启了局部的严格模式，所以changeWeather中的this为undefined
+    
+    console.log('changeWeather');
+    //获取原来的isHot值
+    const isHot = this.state.isHot
+    //严重注意：状态必须通过setState进行更新,且更新是一种合并，不是替换。
+    this.setState({isHot:!isHot})
+    console.log(this);
+
+    //严重注意：状态(state)不可直接更改，下面这行就是直接更改！！！
+    //this.state.isHot = !isHot //这是错误的写法
+  }
+}
+```
+
+需要注意的是：
+
+1. 组件的构造函数，必须要传递一个props参数
+2. 特别关注this【重点】，类中所有的方法局部都开启了严格模式，如果直接进行调用，this就是undefined
+3. 想要改变state,需要使用setState进行修改，如果只是修改state的部分属性，则不会影响其他的属性，这个只是合并并不是覆盖。
+
+**setState更新状态的2种写法**
+
+this.setState()，该方法接收两种参数：对象或函数。
+
+1. 对象：即想要修改的state
+  setState(stateChange, [callback])------对象式的setState
+      1.stateChange为状态改变对象(该对象可以体现出状态的更改)
+      2.callback是*可选*的回调函数, 它在状态更新完毕、界面也更新后(render调用后)才被调用
+
+2. 函数：接收两个函数:
+  第一个函数接受两个参数: 当前state & 当前props.该函数返回一个对象，和直接传递对象参数是一样的，就是要修改的state；
+  第二个函数参数是state改变后触发的回调
+  setState(updater, [callback])------函数式的setState
+      1.updater为返回stateChange对象的函数。
+      2.updater可以接收到state和props。
+      4.callback是可选的回调函数, 它在状态更新、界面也更新后(render调用后)才被调用。
+3. 总结:
     1.对象式的setState是函数式的setState的简写方式(语法糖)
     2.使用原则：
       (1).如果新状态不依赖于原状态 ===> 使用对象方式
       (2).如果新状态依赖于原状态 ===> 使
       (3).如果需要在setState()执行后获取最新的状态数据, 要在第二个callback函数中读取
 
+---
+  
+在此还需要注意的是，setState有异步更新和同步更新两种形式，那么什么时候会同步更新，什么时候会异步更新呢？
 
-------
+**React控制之外的事件中调用setState是同步更新的。比如原生js绑定的事件，setTimeout/setInterval等**。所以调用这些方法的时候就是会仍然显示更新前的状态
+
+**大部分开发中用到的都是React封装的事件，比如onChange、onClick、onTouchMove等，这些事件处理程序中的setState都是异步处理的。**
+
+```js
+//1.创建组件
+class St extends React.Component{
+    //可以直接对其进行赋值
+    state = {isHot:10};
+    render(){     //这里面的This也是实例对象
+        return <h1 onClick = {this.changeWeather}>点击事件</h1> 
+    }
+//箭头函数 [自定义方法--->要用赋值语句的形式+箭头函数]
+    changeWeather = () =>{
+        //修改isHot
+        this.setState({ isHot: this.state.isHot + 1})
+        console.log(this.state.isHot);
+    }
+}
+```
+
+上面的案例中预期setState使得isHot变成了11，输出也应该是11。然而在控制台打印的却是10，也就是并没有对其进行更新。这是因为异步的进行了处理，在输出的时候还没有对其进行处理。
+
+```js
+componentDidMount(){
+    document.getElementById("test").addEventListener("click",()=>{
+        this.setState({isHot: this.state.isHot + 1});
+        console.log(this.state.isHot);
+    })
+}
+```
+
+但是通过这个原生JS的，可以发现，控制台打印的就是11，也就是已经对其进行了处理。也就是进行了同步的更新。
+
+**React怎么调用同步或者异步的呢？**
+
+在 React 的 setState 函数实现中，会根据一个变量 isBatchingUpdates 判断是直接更新 this.state 还是放到队列中延时更新，而 isBatchingUpdates 默认是 false，表示 setState 会同步更新 this.state；但是，有一个函数 batchedUpdates，该函数会把 isBatchingUpdates 修改为 true，而当 React 在调用事件处理函数之前就会先调用这个 batchedUpdates将isBatchingUpdates修改为true，这样由 React 控制的事件处理过程 setState 不会同步更新 this.state。
+
+**如果是同步更新，每一个setState对调用一个render，并且如果多次调用setState会以最后调用的为准，前面的将会作废；如果是异步更新，多个setSate会统一调用一次render** 参见下面的例子：
+
+```js
+changeWeather = () =>{
+    this.setState({
+        isHot:  1,
+        cont:444
+    })
+    this.setState({
+      isHot: this.state.isHot + 1
+
+    })
+    this.setState({
+        isHot:  888,
+        cont:888
+    })
+}
+```
+
+上面的最后会输出：isHot是888，cont是888
+
+```js
+ changeWeather = () =>{
+                this.setState({
+                    isHot: this.state.isHot + 1,
+                })
+                this.setState({
+                    isHot: this.state.isHot + 1,
+                })
+                this.setState({
+                    isHot: this.state.isHot + 888
+                })
+            }
+```
+
+初始isHot为10，最后isHot输出为898，也就是前面两个都没有执行。
+
+**注意！！这是异步更新才有的，如果同步更新，每一次都会调用render，这样每一次更新都会**
+
+
+**B. 简化写法**
+
+([原文件](./01_basics/06_组件实例三大属性1_state/2_state的简写方式.html))
+
+```js
+//1.创建组件
+class Weather extends React.Component{
+  //初始化状态
+  state = {isHot:false,wind:'微风'}
+
+  //自定义方法————要用赋值语句的形式+箭头函数
+  changeWeather = ()=>{
+    const isHot = this.state.isHot
+    this.setState({isHot:!isHot})
+  }
+
+  render(){
+    const {isHot,wind} = this.state
+    return <h1 onClick={this.changeWeather}>今天天气很{isHot ? '炎热' : '凉爽'}，{wind}</h1>
+  }
+}
+```
+
+1. state的赋值可以不在构造函数中进行
+2. 使用了箭头函数，将this进行了改变：变成了
+
+```html
+<body>
+    <!-- 准备好容器 -->
+    <div id="test">
+        
+    </div>
+</body>
+<!-- 引入依赖 ,引入的时候，必须就按照这个步骤-->
+<script src="../js/react.development.js" type="text/javascript"></script>
+<script src="../js/react-dom.development.js" type="text/javascript"></script>
+
+<script src="../js/babel.min.js"></script>
+<script type="text/babel">
+        class St extends React.Component{
+            //可以直接对其进行赋值
+            state = {isHot:true};
+            render(){ //这个This也是实例对象
+                return <h1 onClick = {this.dem}>今天天气很{this.state.isHot?"炎热":"凉爽"}</h1>    
+                //或者使用{()=>this.dem()也是可以的}
+            }
+            //箭头函数 [自定义方法--->要用赋值语句的形式+箭头函数]
+            dem = () =>{
+                console.log(this);
+                const state =  this.state.isHot;
+                this.setState({isHot:!state});
+            }
+        }
+        ReactDOM.render(<St />,document.getElementById("test"));       
+</script>
+```
+
+如果想要在调用方法的时候传递参数，有两个方法：
+
+```html
+<button onClick={(e) => this.deleteRow(id, e)}>Delete Row</button>
+<button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
+```
+
+上述两种方式是等价的，分别通过[箭头函数](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)和 [`Function.prototype.bind`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind) 来实现。
+
+在这两种情况下，React 的事件对象 `e` 会被作为第二个参数传递。如果通过箭头函数的方式，事件对象必须显式的进行传递，而通过 `bind` 的方式，事件对象以及更多的参数将会被隐式的进行传递。
+
+#### Props
+
+参考[源代码](01_basics/07_组件实例三大属性2_props/1_props基本使用.html)
+
+Props主要用来传递数据，比如组件之间进行传值
+
+基本使用：
+
+```html
+<body>
+    <div id = "div"></div>
+</body>
+<script type="text/babel">
+    class Person extends React.Component{
+        render(){
+            return (
+                <ul>
+                    //接受数据并显示
+                    <li>{this.props.name}</li>
+                    <li>{this.props.age}</li>
+                    <li>{this.props.gender}</li>
+                </ul>
+            )
+        }
+    }
+    //传递数据
+    ReactDOM.render(<Person name="tom" age = "41" gender="男"/>,document.getElementById("div"));
+</script>
+```
+
+如果传递的数据是一个对象，可以更加简便的使用
+
+```html
+<script type="text/babel">
+    class Person extends React.Component{
+        render(){
+            return (
+                <ul>
+                    <li>{this.props.name}</li>
+                    <li>{this.props.age}</li>
+                    <li>{this.props.gender}</li>
+                </ul>
+            )
+        }
+    }
+    const p = {name:"张三",age:"18",gender:"女"}
+   ReactDOM.render(<Person {...p}/>,document.getElementById("div"));
+</script>
+```
+
+**展开运算符**
+... 这个符号: 这个是一个展开运算符，主要用来展开数组，如下面这个例子：
+
+```js
+arr = [1,2,3];
+arr1 = [4,5,6];
+arr2 = [...arr,...arr1];  //arr2 = [1,2,,3,4,5,6]
+```
+
+但是他还有其他的用法：
+
+1. 复制一个对象给另一个对象{...对象名}。此时这两个对象并没有什么联系了
+    ```js
+    const p1 = {name:"张三", age:"18", gender:"女"}
+    const p2 = {...p1};
+    p1.name = "sss";
+    console.log(p2)  //{name:"张三",age:"18",gender:"女"}
+    ```
+2. 在复制的时候，合并其中的属性
+    ```js
+    const p1 = {name:"张三",age:"18",gender:"女"}
+    const p2 = {...p1, name: "111",hua:"ss"};
+    p1.name = "sss";
+    console.log(p2)  //{name: "111", age: "18", gender: "女",hua:"ss"}
+    ```
+3. 展开运算符总结
+在js中可以使用{...p}来复制一个对象，但是这个地方并不是复制对象，而是babel+react通过展开运算符，展开了一个对象。这只能在标签中进行使用。
+props传递一个对象，是因为babel+react使得`{..p}`可以展开对象，但是只有在标签中才能使用
+    ```js
+    const p = {name:"张三",age:"18",gender:"女"}
+    ReactDOM.render(<Person {...p}/>,document.getElementById("div"));
+    ```  
+
+**对于props进行限制**
+<span style='font-size: 14px;'>参考[源代码](01_basics/07_组件实例三大属性2_props/2_对props进行限制.html)
+以及[它的简写形式](01_basics/07_组件实例三大属性2_props/3_props的简写方式.html)
+    （*简写实际上就是把对这个类内传递的`props`的限制，从 **类** 外面，写到了 **类** 里面*）
+</span>
+
+很多时候都想要传递的参数进行相应的限制，比如：限制传递参数的类型，参数的默认值等等
+
+react对此提供了相应的解决方法：
+
+- propTypes:类型检查，还可以限制不能为空
+- defaultProps：默认值
+
+```js
+  class Person extends React.Component{
+    //对组件的属性对其进行限制
+    static propTypes = {
+        name:PropTypes.string.isRequired, //限定name是string类型，并且必须要传递
+        gender:PropTypes.string,          //限定gender是string类型
+        speak:PropTypes.func              //限定speak是function类型
+    }
+    //指定默认的标签属性
+    static defaultProps = {
+        gender: "Walmart Bag",
+        age:18
+    }
+
+    render(){
+      //props是只读的
+      //this.props.name = 'jack' //此行代码会报错，因为props是只读的
+      return (
+          <ul>
+              <li>{this.props.name}</li>
+              <li>{this.props.age}</li>
+              <li>{this.props.gender}</li>
+          </ul>
+      )
+    }
+  }
+  
+  function speak(){
+    console.log("I\'m speaking")
+  }
+```
+
+**关于类中的构造器**：
+[原文件](./01_basics/07_组件实例三大属性2_props/3_props的简写方式.html)
+
+1. 类中的构造器，能省略则省略
+2. 构造器是否接收props，是否传递给super，取决于：是否希望在构造器中通过this访问props。
+    但是极其罕见。
+    例子：
+    ```js
+    constructor(props){
+        // console.log(props);
+        super(props)
+        console.log('constructor',this.props);
+      }
+    ```
+
+**函数式组件的使用**：
+函数在使用props的时候，是作为参数进行使用的`props`
+[完整代码](01_basics/07_组件实例三大属性2_props/4_函数组件使用props.html)
+
+```js
+function Person(props){
+  return (
+    <ul>
+        <li>{props.name}</li>
+        <li>{props.age}</li>
+        <li>{props.gender}</li>
+    </ul>
+  )
+}
+```
+
+#### Refs
+
+Refs 提供了一种方式，允许我们访问 DOM 节点或在 render 方法中创建的 React 元素。
+
+Refs主要提供了三种方式：
+
+**1.字符串形式**
+<span style="font-size: 14px">[完整代码](01_basics/08_组件实例三大属性3_refs/1_字符串形式的ref.html)</span>
+在想要获取到一个DOM节点，可以直接在这个节点上添加`ref`属性。利用该属性进行获取该节点的值。
+
+案例：给需要的节点添加`ref`属性，此时该实例对象的`refs`上就会有这个值。就可以利用实例对象的`refs`获取已经添加节点的值.
+多个`ref`都被存放在同一个`refs`里面了
+
+```js
+//展示input1的数据
+showData = ()=>{
+  const {input1} = this.refs
+  alert(input1.value)
+}
+render(){
+  return(
+    <div>
+      <input ref="input1" type="text" placeholder="点击按钮提示数据"/>&nbsp;
+      <button onClick={this.showData}>点我提示input1的数据</button>&nbsp;
+    </div>
+  )
+}
+```
+
+**2.回调形式**
+<span style="font-size: 14px">[完整代码](01_basics/08_组件实例三大属性3_refs/2_回调函数形式的ref.html)</span>
+回调形式会在ref属性中添加一个回调函数。将该DOM作为参数传递过去。
+
+如：ref里面就是一个回调函数，self就是该input标签。然后在将该DOM元素赋值给实例对象中的一个属性
+
+```js
+//展示input1的数据
+showData = ()=>{
+  const {input1} = this
+  alert(input1.value)
+}
+render(){
+  return(
+    <div>
+      <input ref={ c => this.input1=c } type="text" placeholder="点击按钮提示数据"/>&nbsp;
+      <button onClick={this.showData}>点我提示input1的数据</button>&nbsp;
+    </div>
+  )
+}
+```
+
+也可以将函数提取出来，在ref中进行调用(???这是啥 没看懂)
+
+```js
+isRef = (self) =>{
+            this.dian = self;
+            console.log(self)
+        }
+
+<input ref={this.isRef} type="text" placeholder="点击弹出" />
+```
+
+**回调ref中回调执行次数的问题*: [完整代码](01_basics/08_组件实例三大属性3_refs/3_回调ref中回调执行次数的问题.html)
+
+**3.API形式**
+React其实已经给我们提供了一个相应的API，他会自动的将该DOM元素放入实例对象中
+
+如下：依旧先在DOM元素中添加一个ref元素
+
+```js
+{/*<input ref={this.容器名称} type="text" placeholder="点击弹出" />*/}
+<input ref={this.MyRef} type="text" placeholder="点击弹出" />
+<input ref={this.MyRef1} type="text" placeholder="点击弹出" />
+```
+
+通过API，创建React的容器，相当于省略了回调的中间环节。但是这个容器是专门专用的，所以每一个ref都需要创建。
+该API会将DOM元素赋值给 *实例对象的名称 = 容器名称* 的`current`属性
+
+```js
+// [容器名称] = React.createRef()
+MyRef = React.createRef();
+MyRef1 = React.createRef();
+```
+
+然后就可以使用了
+
+```js
+btnOnClick = () =>{
+    //创建之后，将自身节点，传入current中
+    console.log(this.MyRef.current.value);
+}
+```
+<span style="font-size: 14px">[完整代码](01_basics/08_组件实例三大属性3_refs/4_createRef的使用.html)</span>
+
+**官方提示我们不要过度的使用ref，如果发生时间的元素刚好是需要操作的元素，就可以使用事件去替代。**
+
+### 09 React事件
+
+<span style="font-size: 14px">[完整代码](01_basics/09_react中的事件处理/事件处理.html)</span>
+
+>1. React的事件是通过onXxx属性指定事件处理函数
+>   ​ a. React使用的都是自定义(合成)事件, 而不是使用的原生DOM事件
+>           为了更好的兼容性
+>    b. React中的事件是通过事件委托方式处理的(委托给组件最外层的元素)
+>         为了高效
+>事件中必须返回的是函数
+>2. 通过event.target得到发生事件的DOM元素对象
+>         不要过度使用ref: 如果在同一个对象上，那就可以用event.target.value，不用ref了
+
+比如：
+先声明一个事件，然后在根据事件创建相应的函数，根据事件的event参数，将DOM元素获取到。
+
+```js
+showData2 = (event)=>{
+  alert(event.target.value);
+}
+
+render(){
+  return(
+    <div>
+      <input onBlur={this.showData2} type="text" placeholder="失去焦点提示数据"/>
+    </div>
+  )
+}
+```
+
+### 10 收集表单数据
+
+**受控和非受控组件**
+<span style='color: violet'>受控组件</span>：
+ 使 React 的 state 成为“唯一数据源”。渲染表单的 React 组件还控制着用户输入过程中表单发生的操作。被 React 以这种方式控制取值的表单输入元素就叫做“受控组件”。
+
+```js
+saveName = (event) =>{
+    this.setState({name:event.target.value});
+}
+
+savePwd = (event) => {
+    this.setState({pwd:event.target.value});
+}
+
+render() {
+    return (
+        <form action="http://www.baidu.com" onSubmit={this.login}>
+            用户名：<input value={this.state.name} onChange={this.saveName} type = "text" />
+            密码<input value={this.state.pwd} onChange={this.savePwd} type = "password"/>
+            <button>登录</button>
+        </form>
+    )
+}
+```
+
+<span style="font-size: 13px">（[完整代码](01_basics/10_react中收集表单数据/2_受控组件.html)）<span>
+
+由于在表单元素上设置了 `value` 属性，因此显示的值将始终为 `this.state.value`，这使得 React 的 state 成为唯一数据源。由于 `onchange` 在每次按键时都会执行并更新 React 的 state，因此显示的值将随着用户输入而更新。
+
+对于受控组件来说，输入的值始终由 React 的 state 驱动。
+
+<span style='color: violet'>非受控组件</span>：
+非受控组件其实就是表单元素的值不会更新state。输入数据都是现用现取的。
+如下：下面并没有使用state来控制属性，使用的是事件来控制表单的属性值。
+
+```js
+class Login extends React.Component{
+  login = (event) =>{
+    event.preventDefault(); // 阻止表单提交 // 暂时用一下来防止报错
+    const {username,password} = this
+    alert(`你输入的用户名是：${username.value},你输入的密码是：${password.value}`)
+  }
+  render() {
+      return (
+          <form onSubmit={this.login}>
+          用户名：<input ref = {c => this.name=c } type = "text" name ="username"/>
+          密码：<input ref = {c => this.pwd=c } type = "password" name ="password"/>
+          <button>登录</button>
+          </form>
+      )
+  }
+}
+```
+
+<span style="font-size: 13px">（[完整代码](01_basics/10_react中收集表单数据/1_非受控组件.html)）</span>
+
+### 11 函数柯里化
+
+**高级函数**
+如果一个函数符合下面2个规范中的任何一个，那该函数就是高阶函数。
+
+  1. 若A函数，接收的参数是一个函数，那么A就可以称之为高阶函数。
+  2. 若A函数，调用的返回值依然是一个函数，那么A就可以称之为高阶函数。
+
+  常见的高阶函数有：`Promise`、`setTimeout`、`arr.map()`等等
+
+**函数的柯里化**
+通过函数调用继续返回函数的方式，实现多次接收参数最后统一处理的函数编码形式
+
+```js
+function sum(a){
+  return(b)=>{
+    return (c)=>{
+      return a+b+c
+    }
+  }
+}
+```
+
+我们将上面的*Login案例(受控版)*简化，创建高级函数：<span style="font-size: 13px">（[完整代码](01_basics/11_高阶函数_函数柯里化/1_高阶函数_函数柯里化.html)）</span>
+
+```js
+class Login extends React.Component{
+  //初始化状态
+  state = {
+    username:'',
+    password:''
+  }
+  //保存表单数据到状态中
+  saveFormData = (dataType)=>{
+    return (event) => {
+      this.setState({[dataType]:event.target.value})
+    }
+  }
+  //表单提交的回调
+  handleSubmit = (event)=>{
+    event.preventDefault() //阻止表单提交
+    const {username,password} = this.state
+    alert(`你输入的用户名是：${username},你输入的密码是：${password}`)
+  }
+  render(){
+    return(
+      <form onSubmit={this.handleSubmit}>
+        用户名：<input onChange={this.saveFormData('username')} type="text" name="username"/>
+        密码：<input onChange={this.saveFormData('password')} type="password" name="password"/>
+        <button>登录</button>
+      </form>
+    )
+  }
+}
+```
+
+不用函数柯里化的实现 <span style="font-size: 13px">（[完整代码](01_basics/11_高阶函数_函数柯里化/2_不用函数柯里化的实现.html)）</span>
+只需要改一下`saveFormData` 函数：
+
+```js
+//保存表单数据到状态中
+saveFormData = (dataType,event)=>{
+  this.setState({[dataType]:event.target.value})
+}
+```
+
+### 12 生命周期
+
+#### （旧）
+
+1. 组件从创建到死亡，会经过一些特定的阶段
+2. React组件中包含一系列钩子函数{生命周期回调函数}，会在特定的时刻调用
+3. 我们在定义组件的时候，会在特定的声明周期回调函数中，做特定的工作
+
+如下图是旧生命周期的结构图：
+
+![旧生命周期](./pics/react生命周期(旧).png)
+
+我们通过一个案例更详细地了解这个生命周期： <span style="font-size: 13px">（[完整代码](01_basics/12_组件的生命周期/2_react生命周期(旧).html)）</span>
+
+```js
+...我写到这里。生命周期有点令人头疼了。下次继续！
+```
+
+我们在控制台看一下：
+
+当我们刚刚打开控制台的时候，组件第一次加载：
+
+![组件第一次加载](./react/1611568192158.png)
+
+当我们点击按钮更新state的时候：
+
+![更新state](./react/1611568250881.png)
+
+#### （新）
+
+在最新的react版本中，有些生命周期钩子被抛弃了，在官网中是这样说的：
+
+我们得到最重要的经验是，过时的组件生命周期往往会带来不安全的编码实践，具体函数如下：
+
+- `componentWillMount`
+- `componentWillReceiveProps`
+- `componentWillUpdate`
+
+这些生命周期方法经常被误解和滥用；此外，我们预计，在异步渲染中，它们潜在的误用问题可能更大。我们将在即将发布的版本中为这些生命周期添加 “UNSAFE_” 前缀。（这里的 “unsafe” 不是指安全性，而是表示使用这些生命周期的代码在 React 的未来版本中更有可能出现 bug，尤其是在启用异步渲染之后。）
+
+由此可见，新版本中并不推荐持有这三个函数，取而代之的是带有UNSAFE_ 前缀的三个函数，比如: UNSAFE_ componentWillMount。即便如此，其实React官方还是不推荐大家去使用，在以后版本中有可能会去除这几个函数。
+
+如下图是新的生命周期：
+
+![新生命周期](./react/1611651795885.png)
+
+从图上可以看出，新生命周期和旧生命周期的区别主要有：
+
+1.抛弃了上面所说的三个钩子函数【其实还可以使用】
+
+2.新添加了两个钩子函数
+
+现在重点说一下，新添加的钩子函数
+
+**static getDerivedStateFromProps(props, state)**
+
+首先，该函数会调用 render 方法之前调用，并且在初始挂载及后续更新时都会被调用；该函数必须是静态的；给组件传递的数据（props）以及组件状态（state），会作为参数到这个函数中；该函数也必须有返回值，返回一个Null或者state对象。因为初始化和后续更新都会执行这个方法，因此在这个方法返回state对象，就相当于将原来的state进行了覆盖，所以倒是修改状态不起作用。
+
+**getSnapshotBeforeUpdate(prevProps, prevState)**
+
+ `getSnapshotBeforeUpdate()` 在最近一次渲染输出（提交到 DOM 节点）之前调用。它使得组件能在发生更改之前从 DOM 中捕获一些信息（例如，滚动位置）。此生命周期的任何返回值将作为参数传递`componentDidUpdate()`。 
+
+> 补充一下：componentDidUpdate(prevProps, prevState, snapshot)
+>
+> 该生命周期函数，可以有三个参数：原始传过来的参数，最开始的状态，getSnapshotBeforeUpdate传递的值
+>
+> 关于更多关于生命周期的介绍，可以参考官方文档：
+>
+> https://zh-hans.reactjs.org/docs/react-component.html#render
+
+以上就是两个新添加的钩子函数，但是在现实开发中可能并不常用这两个。
+
+**案例：在一个区域内，定时的输出以行话，如果内容大小超过了区域大小，就出现滚动条，但是内容不进行移动 **
+
+![案例](./react/BeforeGender.gif)
+
+如上面的动图：区域内部的内容展现没有变化，但是可以看见滚动条在变化，也就是说上面依旧有内容在输出，只不过不在这个区域内部展现。
+
+**实现：**
+
+【一些css样式，就不在这展示了】
+
+1.首先我们先实现定时输出内容
+
+我们可以使用state状态，改变新闻后面的值，但是为了同时显示这些内容，我们应该为state的属性定义一个数组。并在创建组件之后开启一个定时器，不断的进行更新state。更新渲染组件
+
+```js
+ class New extends React.Component{
+
+        state = {num:[]};
+
+        //在组件创建之后,开启一个定时任务
+        componentDidMount(){
+            setInterval(()=>{
+                let {num} = this.state;
+                const news = (num.length+1);
+                this.setState({num:[news,...num]});
+            },2000);
+        }
+
+        render(){
+            return (
+
+                <div ref = "list" className = "list">{
+                    this.state.num.map((n,index)=>{
+                    return <div className="news" key={index} >新闻{n}</div>
+                    })
+                }</div>
+            )
+        }
+  }
+  ReactDOM.render(<New />,document.getElementById("div"));
+
+```
+
+2.接下来就是控制滚动条了
+
+我们在组件渲染到DOM之前获取组件的高度，然后用组件渲染之后的高度减去之前的高度就是一条新的内容的高度，这样在不断的累加到滚动条位置上。
+
+```html
+getSnapshotBeforeUpdate(){
+	return this.refs.list.scrollHeight;
+}
+
+componentDidUpdate(preProps,preState,height){
+	this.refs.list.scrollTop += (this.refs.list.scrollHeight - height);
+}
+```
+
+这样就实现了这个功能。
+
+### 13 Diff算法
+
+提到这个算法，就必须说一下关于Key的事情了。
+
+其实每个组件中的每个标签都会有一个key,只不过有的必须显示的指定，有的可以隐藏。
+
+ 如果生成的render出来后就不会改变里面的内容，那么你不需要指定key（不指定key时，React也会生成一个默认的标识）,或者将index作为key，只要key不重复即可。
+
+但是如果你的标签是动态的，是有可能刷新的，就必须显示的指定key。必须上面案使用map进行便利的时候就必须指定Key:
+
+```html
+this.state.num.map((n,index)=>{
+	return <div className="news" key={index} >新闻{n}</div>
+})
+```
+
+这个地方虽然显示的指定了key，但是**官网并不推荐使用Index作为Key去使用**；
+
+这样会很有可能会有效率上的问题
+
+举个例子：
+
+在一个组件中，我们先创建了两个对象，通过循环的方式放入< li>标签中，此时key使用的是index。
+
+```html
+person:[
+    {id:1,name:"张三",age:18},
+    {id:2,name:"李四",age:19}
+]
+
+this.state.person.map((preson,index)=>{
+  return  <li key = {index}>{preson.name}</li>
+})
+```
+
+如下图展现在页面中：
+
+![原始对象数组](./react/1611800406864.png)
+
+此时，我们想在点击按钮之后动态的添加一个对象，并且放入到li标签中，在重新渲染到页面中。
+
+我们通过修改State来控制对象的添加。
+
+```html
+<button onClick={this.addObject}>点击增加对象</button>
+addObject = () =>{
+    let {person} = this.state;
+    const p = {id:(person.length+1),name:"王五",age:20};
+    this.setState({person:[p,...person]});
+}
+```
+
+如下动图所示：
+
+ ![原始对象数组](./react/addObject.gif) 
+
+这样看，虽然完成了功能。但是其实存在效率上的问题，	我们先来看一下两个前后组件状态的变化：
+
+![组件状态的变化](./react/1611800988496.png)
+
+我们发现，组件第一个变成了王五，张三和李四都移下去了。因为我们使用Index作为Key，这三个标签的key也就发生了改变【张三原本的key是0，现在变成了1，李四的key原本是1，现在变成了2，王五变成了0】在组件更新状态重新渲染的时候，就出现了问题：
+
+因为react是通过key来比较组件标签是否一致的，拿这个案例来说：
+
+首先，状态更新导致组件标签更新，react根据Key，判断旧的虚拟DOM和新的虚拟DOM是否一致
+
+key = 0 的时候 旧的虚拟DOM 内容是张三  新的虚拟DOM为王五 ，react认为内容改变，从而重新创建新的真实DOM.
+
+key = 1 的时候 旧的虚拟DOM 内容是李四，新的虚拟DOM为张三，react认为内容改变，从而重新创建新的真实DOM
+
+key = 2 的时候 旧的虚拟DOM没有，创建新的真实DOM 
+
+这样原本有两个虚拟DOM可以复用，但都没有进行复用，完完全全的都是新创建的；这就导致效率极大的降低。
+
+其实这是因为我们将新创建的对象放在了首位，如果放在最后其实是没有问题的，但是因为官方并不推荐使用Index作为key值，我们推荐使用id作为key值。从而完全避免这样的情况。
+
+**用index作为key可能会引发的问题:**
+
+1。若对数据进行:逆序添加、逆序删除等破坏顺序操作:
+
+​		会产生没有必要的真实DOM更新  界面效果没问题,但效率低。
+
+2．如果结构中还包含输入类的DOM:
+
+​        会产生错误DOM更新   界面有问题。
+
+3，注意! 如果不存在对数据的逆序添加、逆序删除等破坏顺序操作，仅用于渲染列表用于展示，使用index作为key是没有问题的。
+
+**开发如何选择key?**
+
+最好使用每一条数据的唯一标识作为key 比如id，手机号，身份证号
+
+如果确定只是简单的展示数据，用Index也是可以的
+
+**而这个判断key的比较规则就是Diff算法**
+
+Diff算法其实就是react生成的新虚拟DOM和以前的旧虚拟DOM的比较规则：
+
+- 如果旧的虚拟DOM中找到了与新虚拟DOM相同的key:
+  - 如果内容没有变化，就直接只用之前旧的真实DOM
+  - 如果内容发生了变化，就生成新的真实DOM			
+
+- 如果旧的虚拟DOM中没有找到了与新虚拟DOM相同的key:
+  - 根据数据创建新的真实的DOM,随后渲染到页面上
+
+
+## 其他 （待整合）
 
 ## Hooks
 
@@ -80,9 +1253,7 @@
 (3). 作用:保存标签对象,功能与React.createRef()一样
 ```
 
- *待补全*
-
-------
+---
 
 ## Staging
 

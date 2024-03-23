@@ -47,7 +47,7 @@ axios 是目前前端最热门的请求工具, 用来向服务器发送 AJAX 请
 <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
 ```
 
-### 基本使用
+### [基本使用](./2-axios使用/2.html)
 
 ```js
 import axios from 'axios';
@@ -58,5 +58,7 @@ legacy way:
 ```js
 const axios = require('axios');
 ```
+
+!!!!!!!写到这里
 
 ## 源码分析
