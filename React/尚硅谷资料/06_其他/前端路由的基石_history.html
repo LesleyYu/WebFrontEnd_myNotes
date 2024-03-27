@@ -11,10 +11,15 @@
 	<button onClick="back()">&lt;= 回退</button>
 	<button onClick="forword()">前进 =&gt;</button>
 
+	<!-- BOM里 本身就有 history，用于记录网页浏览的历史。但是不太好用。我们在这里引入一个库，也叫做history。它本质上也是使用了 BOM 的 history -->
 	<script type="text/javascript" src="https://cdn.bootcss.com/history/4.7.2/history.js"></script>
+
 	<script type="text/javascript">
-		// let history = History.createBrowserHistory() //方法一，直接使用H5推出的history身上的API
+		// let history = History.createBrowserHistory() //方法一，直接使用H5推出的history身上的API。有一些旧的浏览器不支持
 		let history = History.createHashHistory() //方法二，hash值（锚点）
+		// 运行后，网址后面会有一个井号：
+		// http://www.atguigu.com#
+		// 并且在点击跳转之后还是会带有这个井号。
 
 		function push (path) {
 			history.push(path)
@@ -39,3 +44,7 @@
 	</script>
 </body>
 </html>
+
+<!-- 总结：
+工作原理就是依靠的history。
+-->

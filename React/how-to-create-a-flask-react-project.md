@@ -18,7 +18,7 @@ We'll use npx create-react-app, type this in a new terminal:
 
 ### Writing backend: server.py
 
-```
+```python
 from flask import Flask
 
 app = Flask(__name__)
@@ -49,7 +49,7 @@ because the default route Flask (our backend) uses is port 5000.
 Next we go to `App.js` to actually write something in it to transfer our backend *database* to frontend. This is, the json object 
 `{ "members": ["Member1", "Member2", "Member3"] }`
 
-```
+```js
 import React, {useState, useEffect} from 'react'
 
 // useState will be used to create a state variable which will contain the data retreived from the backend, and also render the data on the page.

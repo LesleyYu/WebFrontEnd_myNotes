@@ -1,3 +1,5 @@
 # Ignore node_modules in React
 
 **/node_modules
+
+/.vscode

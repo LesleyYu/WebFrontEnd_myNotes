@@ -1002,7 +1002,7 @@ saveFormData = (dataType,event)=>{
 
 如下图是新的生命周期：
 
-![新生命周期](./react/1611651795885.png)
+![新生命周期](./pics/react生命周期(新).png)
 
 从图上可以看出，新生命周期和旧生命周期的区别主要有：
 
@@ -1589,12 +1589,158 @@ Tips
 
 6. async await 知识点
 
-### 08
+### 08 路由的基本使用
+
+**理解**：
+```
+SPA 的理解
+    1. 单页 Web 应用(single page web application，SPA)。
+    2. 整个应用只有一个完整的页面。
+    3. 点击页面中的链接不会刷新页面，只会做页面的局部更新。
+    4. 数据都需要通过 ajax 请求获取, 并在前端异步展现。
+
+路由的理解
+    1. 什么是路由?
+        1. 一个路由就是一个映射关系(key:value)
+        2. key 为路径, value 可能是 function 或 component
+    2. 路由分类
+        1. 后端路由:
+            1) 理解: value 是 function, 用来处理客户端提交的请求。
+            2) 注册路由: router.get(path, function(req, res))
+            3) 工作过程:当 node 接收到一个请求时, 根据请求路径找到匹配的路由, 调用路
+        由中的函数来处理请求, 返回响应数据
+            2. 前端路由:
+            1) 浏览器端路由，value 是 component，用于展示页面内容。
+            2) 注册路由: `<Route path="/test" component={Test}>`
+            3) 工作过程:当浏览器的 path 变为/test 时, 当前路由组件就会变为 Test 组件
+```
+
+**工作原理**：
+BOM里 本身有 `history`，用于记录网页浏览的历史。
+基本方法有：
+`history.push(path)`
+`history.replace(path)`
+`history.goBack()`
+`history.goForward()`
+`history.listen([callback])`
+
+但是它本身不太好用。我们在这里引入一个库，也叫做history。它本质上也是使用了 BOM 的 history。
+
+```html
+<script type="text/javascript" src="https://cdn.bootcss.com/history/4.7.2/history.js"></script>
+```
+
+下面我们就能在js里使用history了。有两种方法：
+
+1. 方法一，直接使用H5推出的history身上的API。但是有一些旧的浏览器不支持.
+    `let history = History.createBrowserHistory()`
+2. 方法二，hash值（锚点）
+    `let history = History.createHashHistory()`
+    运行后，网址后面会有一个井号：*http://www.atguigu.com#*
+    并且在点击跳转之后还是会带有这个井号。
+    这个虽然有点丑，但是很万能。
+
+**基本使用**：
+
+[完整代码](/02_staging/08_src_我的笔记版/App.jsx)
+
+1. 明确好界面中的导航区、展示区
+2. 导航区的a标签改为Link标签（并且把 href属性 改成 to属性）:  `<Link to="/xxxxx">Demo</Link>`
+    ```js
+    {/* 原生html中，靠<a>跳转不同的页面 */}
+    {/* <a className="list-group-item" href="./about.html">About</a>
+    <a className="list-group-item active" href="./home.html">Home</a> */}
+
+    {/* 在 react 中靠路由链接实现切换组件 - 编写路由链接 */}
+    <Link className='list-group-item' to="/about">About</Link>
+    <Link className='list-group-item' to="/home">About</Link>
+    ```
+    to 属性的**注意**点：
+        1. to 属性 表示跳转到什么页面。
+        2. 杠前不要带点。
+        3. 因为它不区分大小写，所以为了统一最好是小写
+3. 展示区写Route标签进行路径的匹配:  
+    `<Route path='/xxxx' component={Demo}/>`
+    但是：从 react-router-dom@5 更新到 react-router-dom@6 后，`component` 属性被 `element` 替代了:
+    `<Route path='/xxxx' element={<Demo/>}/>`
+    [参考文章](https://stackoverflow.com/questions/69854011/matched-leaf-route-at-location-does-not-have-an-element)
+4. 从 react-router-dom@5 更新到 react-router-dom@6 后，需要在所有 `<Route/>` 标签外包裹上 一个 `<Routes>...</Routes>` 标签
+    [参考文章](https://stackoverflow.com/questions/69832748/error-error-a-route-is-only-ever-to-be-used-as-the-child-of-routes-element)
+5. `<App>`的最外侧包裹了一个 `<BrowserRouter>` 或 `<HashRouter>`
+    直接到 `index.js` 那里去，一次性完成包裹，棒棒的。
+    [完整代码](/02_staging/08_src_我的笔记版/index.jsx)
+6. 知识点：
+    `HashRouter` 和 `BrowserRouter` 的区别：
+    1）`HashRouter` 在网址中多一个井号： `www.blablah/#/question/what/haha`
+    2）`HashRouter` 网址中, 在井号后面的都不会发送给服务器，而BrowserRouter是会发送的
+
+**路由组件与一般组件**
+```js
+1.写法不同：
+      一般组件：<Demo/>
+      路由组件：<Route path="/demo" component={Demo}/> (版本5)
+              <Route path="/demo" element={<Demo/>}/> (版本6)
+2.存放的文件夹不同：
+      一般组件：components
+      路由组件：pages
+3.接收到的props不同：
+      一般组件：写组件标签时传递了什么，就能收到什么
+      [测试用例](./02_staging/09_src_NavLink的使用/components/Header/index.jsx)：`console.log(..)`
+      路由组件：接收到三个固定的属性
+      [测试用例](./02_staging/09_src_NavLink的使用/pages/About/index.jsx)：`console.log(..)`
+      [测试用例](./02_staging/09_src_NavLink的使用/pages/Home/index.jsx)：`console.log(..)`
+            history:
+                  go: ƒ go(n)
+                  goBack: ƒ goBack()
+                  goForward: ƒ goForward()
+                  push: ƒ push(path, state)
+                  replace: ƒ replace(path, state)
+                  ...
+            location:
+                  pathname: "/about"
+                  search: ""
+                  state: undefined
+            match:
+                  params: {}
+                  path: "/about"
+                  url: "/about"
+```
+
+### 09-10 NavLink与封装NavLink
+NavLink可以实现**路由链接的高亮**，通过*activeClassName*指定样式名
+解释：
+NavLink之所以可以实现路由链接的高亮，是因为我们引入的bootstrap正好也把 `activeClassName=active` 写成高亮（蓝色）。
+
+**封装**
+自己定义一个叫做 `<MyNavLink>`的组件，分析得它不是路由组件，是普通组件，所以新建的文件夹放到`components`下面。在App里使用`<MyNavLink>`标签，并将参数传给它：
+
+```js
+<MyNavLink to='About'>About</MyNavLink>
+<MyNavLink to='Home'>Home</MyNavLink>
+```
+
+神奇的一点是，它写成开放式标签，传递给`<MyNavLink>`组件后，开放式标签中间的`About`（标签体）也能传过去。标签体也是一种特殊的标签属性：`props.children`
+它一样可以通过props传递。`<MyNavLink to='About' children='About'></MyNavLink>` 和上面的写法是等效的。
+
+### 11 Switch的使用
+
+1. 通常情况下，path和component是一一对应的关系。
+2. Switch可以提高路由匹配效率(单一匹配)。
+即：
+使用 `<Switch>`标签可以处理一种情况：当多个组件使用同一个path时，只展示第一个。
+
+```js
+<Switch>
+  <Route path="/about" component={About}/>
+  <Route path="/home" component={Home}/>
+  <Route path="/home" component={Test}/>
+</Switch>
+```
+
+上面的代码，只展示 `Home` 不展示 `Test`。[源代码](./02_staging/11_src_Switch的使用/App.jsx)
 
 
-
-
-
+### 12
 
 
 
@@ -1609,45 +1755,6 @@ Tips
 
 
 <!-- 
-## 三、路由的基本使用
-			1.明确好界面中的导航区、展示区
-			2.导航区的a标签改为Link标签
-						<Link to="/xxxxx">Demo</Link>
-			3.展示区写Route标签进行路径的匹配
-						<Route path='/xxxx' component={Demo}/>
-			4.<App>的最外侧包裹了一个<BrowserRouter>或<HashRouter>
-
-## 四、路由组件与一般组件
-			1.写法不同：
-						一般组件：<Demo/>
-						路由组件：<Route path="/demo" component={Demo}/>
-			2.存放位置不同：
-						一般组件：components
-						路由组件：pages
-			3.接收到的props不同：
-						一般组件：写组件标签时传递了什么，就能收到什么
-						路由组件：接收到三个固定的属性
-											history:
-														go: ƒ go(n)
-														goBack: ƒ goBack()
-														goForward: ƒ goForward()
-														push: ƒ push(path, state)
-														replace: ƒ replace(path, state)
-											location:
-														pathname: "/about"
-														search: ""
-														state: undefined
-											match:
-														params: {}
-														path: "/about"
-														url: "/about"
-
-## 五、NavLink与封装NavLink
-				1.NavLink可以实现路由链接的高亮，通过activeClassName指定样式名
-
-## 六、Switch的使用
-				1.通常情况下，path和component是一一对应的关系。
-				2.Switch可以提高路由匹配效率(单一匹配)。
 
 ## 七、解决多级路径刷新页面样式丢失的问题
 				1.public/index.html 中 引入样式时不写 ./ 写 / （常用）

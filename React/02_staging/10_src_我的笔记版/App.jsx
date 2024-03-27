@@ -4,7 +4,6 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Header from './components/Header';
 import MyNavLink from './components/MyNavLink';
-import MyAccount from './pages/MyAccount';
 
 export default class App extends Component {
 
@@ -30,7 +29,6 @@ export default class App extends Component {
 						{/* 注意点： 1. to 属性，表示跳转到什么页面。2. to 属性 杠前不要带点。3. 最好是小写 */}
 						<MyNavLink to='About'>About</MyNavLink>
 						<MyNavLink to='Home'>Home</MyNavLink>
-						<MyNavLink to='MyAccount'>My Account</MyNavLink>
 
 						</div>
 					</div>
@@ -41,7 +39,6 @@ export default class App extends Component {
 								<Routes>
 									<Route path='/home' element={<Home/>}/>
 									<Route path='/about' element={<About/>}/>
-									<Route path='/myaccount' element={<MyAccount/>}/>
 								</Routes>
 							</div>
 						</div>

@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Home'
-import About from './pages/About'
-import Header from './components/Header';
-import MyNavLink from './components/MyNavLink';
-import MyAccount from './pages/MyAccount';
+import { Link, Routes, Route } from 'react-router-dom';
+import Home from './components/Home'
+import About from './components/About'
 
 export default class App extends Component {
 
@@ -13,7 +10,7 @@ export default class App extends Component {
 			<div>
 				<div className="row">
 					<div className="col-xs-offset-2 col-xs-8">
-						<Header/>
+						<div className="page-header"><h2>React Router Demo</h2></div>
 					</div>
 				</div>
 				<div className="row">
@@ -25,13 +22,9 @@ export default class App extends Component {
 						<a className="list-group-item active" href="./home.html">Home</a> */}
 
 						{/* 在 react 中靠路由链接实现切换组件 - 编写路由链接 */}
-						{/* <NavLink className='list-group-item' to="/about">About</NavLink>
-						<NavLink className='list-group-item' to="/home">Home</NavLink> */}
+						<Link className='list-group-item' to="/about">About</Link>
+						<Link className='list-group-item' to="/home">About</Link>
 						{/* 注意点： 1. to 属性，表示跳转到什么页面。2. to 属性 杠前不要带点。3. 最好是小写 */}
-						<MyNavLink to='About'>About</MyNavLink>
-						<MyNavLink to='Home'>Home</MyNavLink>
-						<MyNavLink to='MyAccount'>My Account</MyNavLink>
-
 						</div>
 					</div>
 					<div className="col-xs-6">
@@ -41,7 +34,6 @@ export default class App extends Component {
 								<Routes>
 									<Route path='/home' element={<Home/>}/>
 									<Route path='/about' element={<About/>}/>
-									<Route path='/myaccount' element={<MyAccount/>}/>
 								</Routes>
 							</div>
 						</div>
