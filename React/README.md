@@ -1725,7 +1725,7 @@ NavLink之所以可以实现路由链接的高亮，是因为我们引入的boot
 ### 11 Switch的使用
 
 1. 通常情况下，path和component是一一对应的关系。
-2. Switch可以提高路由匹配效率(单一匹配)。
+2. 整因为这样，我们需要用Switch来提高路由匹配效率(单一匹配)。避免：一个path同时展示多个component的情况。
 即：
 使用 `<Switch>`标签可以处理一种情况：当多个组件使用同一个path时，只展示第一个。
 
@@ -1737,44 +1737,63 @@ NavLink之所以可以实现路由链接的高亮，是因为我们引入的boot
 </Switch>
 ```
 
+**Tip**: 脚手架如果是 create-react-app 6.x.x，那它会报错。必须要是版本5的。
+
 上面的代码，只展示 `Home` 不展示 `Test`。[源代码](./02_staging/11_src_Switch的使用/App.jsx)
 
+### 12 样式丢失问题
 
-### 12
+从webpack讲起：
+webpack打包react 项目时，默认的端口 `http://localhost:3000` 会返回public文件夹内的文件。
+比如：`http://localhost:3000/public/css/bootstrap.css` 会返回对应的bootstrap文件。但是，当我们的路径或者文件名错误，找不到对应文件的时候，webpack就会返回 public 下的 `index.html` 文件。
 
+当我们使用*二级目录*的时候，从主页点进去，不会有任何问题。但是当我们在二级目录下刷新的时候，请求地址只会往上追溯一级，这就导致了我们会*找不到对应文件*。导致样式丢失。
 
+**例子**：
 
+```html
+<MyNavLink to='/hiiii/About'>About</MyNavLink>
+<MyNavLink to='/hiiii/Home'>Home</MyNavLink>
 
+...
 
+<Switch>
+  <Route path="/hiiii/about" component={About}/>
+  <Route path="/hiiii/home" component={Home}/>
+  <Route path="/hiiii/home" component={Test}/>
+</Switch>
+```
 
+我们把路径都改成直接跳转到*二级目录*的样子。从 `http://localhost:3000` 点进去，到二级目录，一切正常，刷新！发现bootstrap.css文件失效了。虽然从Network看仍然是 `200`，但点进去看请求地址已经不对了（多了一个`/hiiii/`），所以返回了 `index.html` 文件，所以失效了。
 
+**解决方法**：
+  1.public/index.html 中 引入样式时不写 ./ 写 / （常用）
+  2.public/index.html 中 引入样式时不写 ./ 写 %PUBLIC_URL% （常用）（只适用于 react脚手架）
+  3.使用HashRouter
+      看到 `#` 之后默认后面全都是前端的路由，不会带给后端请求，所以自动被HashRouter丢掉了。
 
+### 13. 路由的严格匹配与模糊匹配
 
+  1.默认使用的是模糊匹配（简单记：【输入的路径】必须包含要【匹配的路径】，且顺序要一致）
+  2.开启严格匹配：`<Route exact={true} path="/about" component={About}/>`
+  3.严格匹配不要随便开启，需要再开，有些时候开启会导致无法继续匹配二级路由
 
+### 14.Redirect(重定向)的使用	
 
+1.一般写在所有路由注册的**最下方**，当所有路由都无法匹配时，跳转到Redirect指定的路由
+2.具体编码：
+    ```js
+    <Switch>
+      <Route path="/about" component={About}/>
+      <Route path="/home" component={Home}/>
+      <Redirect to="/about"/>
+    </Switch>
+    ```
+
+**Tip**: 脚手架如果是 create-react-app 6.x.x，那它会报错。必须要是版本5的。
 
 
 <!-- 
-
-## 七、解决多级路径刷新页面样式丢失的问题
-				1.public/index.html 中 引入样式时不写 ./ 写 / （常用）
-				2.public/index.html 中 引入样式时不写 ./ 写 %PUBLIC_URL% （常用）
-				3.使用HashRouter
-
-## 八、路由的严格匹配与模糊匹配
-				1.默认使用的是模糊匹配（简单记：【输入的路径】必须包含要【匹配的路径】，且顺序要一致）
-				2.开启严格匹配：<Route exact={true} path="/about" component={About}/>
-				3.严格匹配不要随便开启，需要再开，有些时候开启会导致无法继续匹配二级路由
-
-## 九、Redirect的使用	
-				1.一般写在所有路由注册的最下方，当所有路由都无法匹配时，跳转到Redirect指定的路由
-				2.具体编码：
-						<Switch>
-							<Route path="/about" component={About}/>
-							<Route path="/home" component={Home}/>
-							<Redirect to="/about"/>
-						</Switch>
-
 ## 十、嵌套路由
 				1.注册子路由时要写上父路由的path值
 				2.路由的匹配是按照注册路由的顺序进行的

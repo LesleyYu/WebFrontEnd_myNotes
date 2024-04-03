@@ -21,4 +21,3 @@ event
   .finally(() => {
     console.log("Process Finished.")
 })
-
