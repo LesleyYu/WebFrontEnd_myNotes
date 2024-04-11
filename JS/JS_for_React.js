@@ -31,7 +31,7 @@ names_to_be_filtered.filter((name) => {
 
 
 // 3. Async + Await + Fetch
-// 见 ./async
+// 见 ./async.basics
 
 // 4. DOM
 // Document Object Model
