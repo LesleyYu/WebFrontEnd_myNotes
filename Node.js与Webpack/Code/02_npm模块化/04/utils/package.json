@@ -1,0 +1,8 @@
+{
+  "name": "cz_utils",
+  "version": "1.0.0",
+  "description": "一个数组和字符串常用工具方法的包",
+  "main": "index.js",
+  "author": "itheima",
+  "license": "MIT"
+}

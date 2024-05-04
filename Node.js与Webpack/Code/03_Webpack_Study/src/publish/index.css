@@ -1,0 +1,132 @@
+html, body{
+  height: 100%;
+}
+
+.wrap{
+  min-height: 100%;
+  display: flex;
+}
+
+/* 提示框 */
+.alert{
+  width: 400px;
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  z-index: 10000;
+}
+.show{
+  display: block;
+}
+
+/* 侧边栏 */
+.aside {
+  width: 200px;
+  background-color: #023;
+  padding-top: 40px;
+}
+.aside h2 {
+  text-align: center;
+  color: #fc6627;
+}
+
+/* 侧边栏导航 */
+.nav{
+  padding-left: 20px;
+}
+.nav li {
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  color: white;
+  cursor: pointer;
+  list-style: none;
+}
+.nav li a{
+  color: white;
+  text-decoration: none;
+}
+.nav li a.active{
+  color: #409eff !important;
+}
+
+/* 右侧区域 */
+.main{
+  flex: 1;
+}
+.top-nav{
+  height: 60px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 40px;
+}
+.nav-item span{
+  cursor: pointer;
+}
+.nav-item span:last-of-type{
+  margin-left: 20px;
+}
+
+/* 卡片容器布局 */
+.content{
+  padding: 30px;
+}
+.card{
+  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+  border: 1px solid #ebeef5;
+  padding: 20px;
+}
+.card .title{
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ebeef5;
+}
+
+/* 表单 */
+.body form>div{
+  margin-top: 20px;
+}
+.body form input, .body form select{
+  width: auto;
+  display: inline-block;
+}
+
+/* 封面 */
+.cover .place{
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  font-size: 40px;
+  line-height: 200px;
+  border: 1px solid #ddd;
+  color: #aaa;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: top;
+}
+.cover img{
+  width: 200px;
+  height: 200px;
+}
+.cover .rounded{
+  display: none;
+}
+.cover .show{
+  display: inline-block;
+}
+.cover .hide{
+  display: none;
+}
+
+/* 富文本编辑器 */
+#editor—wrapper {
+  border: 1px solid #ccc;
+  z-index: 100; /* 按需定义 */
+}
+#toolbar-container { border-bottom: 1px solid #ccc; }
+#editor-container { height: 500px; }

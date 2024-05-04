@@ -185,6 +185,7 @@ const VDOM = React.createElement('h1',{id:"title"},"nihao")
 #### 真实和虚拟DOM的区别
 
 运行 [这个文件](./01_basics/02_虚拟DOM的两种创建方式/3_虚拟DOM与真实DOM.html) 能在console中看到：
+
 ![真实和虚拟DOM](./pics/真实和虚拟DOM.png)
 
 关于虚拟DOM：
@@ -273,7 +274,8 @@ render中的this是谁？
 
 - 在类式组件内：
 运行 [2_类式组件.html](./01_basics/05_react中定义组件/2_类式组件.html) 之后得到 类本身的这个东西：
-![类式组件内的this](./pics/类式组件内的this.png)
+
+- ![类式组件内的this](./pics/类式组件内的this.png)
 
 #### 组件案例
 
@@ -382,14 +384,14 @@ class Weather extends React.Component{
 this.setState()，该方法接收两种参数：对象或函数。
 
 1. 对象：即想要修改的state
-  setState(stateChange, [callback])------对象式的setState
+    setState(stateChange, [callback])------对象式的setState
       1.stateChange为状态改变对象(该对象可以体现出状态的更改)
       2.callback是*可选*的回调函数, 它在状态更新完毕、界面也更新后(render调用后)才被调用
 
 2. 函数：接收两个函数:
-  第一个函数接受两个参数: 当前state & 当前props.该函数返回一个对象，和直接传递对象参数是一样的，就是要修改的state；
-  第二个函数参数是state改变后触发的回调
-  setState(updater, [callback])------函数式的setState
+    第一个函数接受两个参数: 当前state & 当前props.该函数返回一个对象，和直接传递对象参数是一样的，就是要修改的state；
+    第二个函数参数是state改变后触发的回调
+    setState(updater, [callback])------函数式的setState
       1.updater为返回stateChange对象的函数。
       2.updater可以接收到state和props。
       4.callback是可选的回调函数, 它在状态更新、界面也更新后(render调用后)才被调用。
@@ -401,7 +403,7 @@ this.setState()，该方法接收两种参数：对象或函数。
       (3).如果需要在setState()执行后获取最新的状态数据, 要在第二个callback函数中读取
 
 ---
-  
+
 在此还需要注意的是，setState有异步更新和同步更新两种形式，那么什么时候会同步更新，什么时候会异步更新呢？
 
 **React控制之外的事件中调用setState是同步更新的。比如原生js绑定的事件，setTimeout/setInterval等**。所以调用这些方法的时候就是会仍然显示更新前的状态
@@ -626,12 +628,12 @@ arr2 = [...arr,...arr1];  //arr2 = [1,2,,3,4,5,6]
     console.log(p2)  //{name: "111", age: "18", gender: "女",hua:"ss"}
     ```
 3. 展开运算符总结
-在js中可以使用{...p}来复制一个对象，但是这个地方并不是复制对象，而是babel+react通过展开运算符，展开了一个对象。这只能在标签中进行使用。
-props传递一个对象，是因为babel+react使得`{..p}`可以展开对象，但是只有在标签中才能使用
+   在js中可以使用{...p}来复制一个对象，但是这个地方并不是复制对象，而是babel+react通过展开运算符，展开了一个对象。这只能在标签中进行使用。
+   props传递一个对象，是因为babel+react使得`{..p}`可以展开对象，但是只有在标签中才能使用
     ```js
     const p = {name:"张三",age:"18",gender:"女"}
     ReactDOM.render(<Person {...p}/>,document.getElementById("div"));
-    ```  
+    ```
 
 **对于props进行限制**
 <span style='font-size: 14px;'>参考[源代码](01_basics/07_组件实例三大属性2_props/2_对props进行限制.html)
@@ -810,11 +812,11 @@ btnOnClick = () =>{
 <span style="font-size: 14px">[完整代码](01_basics/09_react中的事件处理/事件处理.html)</span>
 
 >1. React的事件是通过onXxx属性指定事件处理函数
->   ​ a. React使用的都是自定义(合成)事件, 而不是使用的原生DOM事件
+>     ​ a. React使用的都是自定义(合成)事件, 而不是使用的原生DOM事件
 >           为了更好的兼容性
 >    b. React中的事件是通过事件委托方式处理的(委托给组件最外层的元素)
 >         为了高效
->事件中必须返回的是函数
+>    事件中必须返回的是函数
 >2. 通过event.target得到发生事件的DOM元素对象
 >         不要过度使用ref: 如果在同一个对象上，那就可以用event.target.value，不用ref了
 
@@ -915,7 +917,7 @@ function sum(a){
 }
 ```
 
-我们将上面的*Login案例(受控版)*简化，创建高级函数：<span style="font-size: 13px">（[完整代码](01_basics/11_高阶函数_函数柯里化/1_高阶函数_函数柯里化.html)）</span>
+我们将上面的 *Login案例(受控版)* 简化，创建高级函数：<span style="font-size: 13px">（[完整代码](01_basics/11_高阶函数_函数柯里化/1_高阶函数_函数柯里化.html)）</span>
 
 ```js
 class Login extends React.Component{
@@ -973,7 +975,7 @@ saveFormData = (dataType,event)=>{
 我们通过一个案例更详细地了解这个生命周期： <span style="font-size: 13px">（[完整代码](01_basics/12_组件的生命周期/2_react生命周期(旧).html)）</span>
 
 ```js
-...我写到这里。生命周期有点令人头疼了。下次继续！
+...写到这里
 ```
 
 我们在控制台看一下：
@@ -1437,9 +1439,9 @@ Tips
 
     ```js
     const { keywordElement: {value: keyWord } } = this
-
+    
     // this.props.updateAppState({ isFirst: false, isLoading: true })
-
+    
     axios.get(`https://api.github.com/search/users?q=${keyWord}`).then(
       response => { 
         // this.props.updateAppState({ users: response.data.items, isLoading: false});
@@ -1457,7 +1459,7 @@ Tips
     
     //发送请求前通知 List 更新状态
     PubSub.publish('hi', { isFirst: false, isLoading: true })
-
+    
     axios.get(`https://api.github.com/search/users?q=${keyWord}`).then(
       response => { 
         PubSub.publish('hi', { users: response.data.items, isLoading: false })
@@ -1479,7 +1481,7 @@ Tips
           this.setState(stateObj)
         })
       }
-
+    
     // 需要在结束的时候取消订阅
     componentWillUnmount() {
       PubSub.unsubscribe(this.token)
@@ -1589,9 +1591,12 @@ Tips
 
 6. async await 知识点
 
+
+
 ### 08 路由的基本使用
 
 **理解**：
+
 ```
 SPA 的理解
     1. 单页 Web 应用(single page web application，SPA)。
@@ -1650,7 +1655,7 @@ BOM里 本身有 `history`，用于记录网页浏览的历史。
     {/* 原生html中，靠<a>跳转不同的页面 */}
     {/* <a className="list-group-item" href="./about.html">About</a>
     <a className="list-group-item active" href="./home.html">Home</a> */}
-
+    
     {/* 在 react 中靠路由链接实现切换组件 - 编写路由链接 */}
     <Link className='list-group-item' to="/about">About</Link>
     <Link className='list-group-item' to="/home">About</Link>
@@ -1813,7 +1818,7 @@ webpack打包react 项目时，默认的端口 `http://localhost:3000` 会返回
 							注册路由(无需声明，正常注册即可)：<Route path="/demo/test" component={Test}/>
 							接收参数：this.props.location.state
 							备注：刷新也可以保留住参数
-				
+
 
 
 ## 十二、编程式路由导航

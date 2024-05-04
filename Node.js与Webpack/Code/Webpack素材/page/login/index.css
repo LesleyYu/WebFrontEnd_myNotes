@@ -1,0 +1,45 @@
+html,
+body {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* 提示框 */
+.alert{
+  width: 400px;
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+}
+.show{
+  display: block !important;
+}
+
+/* 登录 */
+.login-wrap {
+  width: 400px;
+  padding: 20px;
+  background-color: #fff;
+}
+.login-wrap .title{
+  font-size: 28px;
+  text-align: center;
+  color: #fc6627;
+}
+.login-wrap .login-form {
+  margin-top: 20px;
+}
+input::-webkit-input-placeholder{
+  color:#dcdfe6 !important;
+}
+.login-form .btn{
+  width: 100%;
+  background-color: #66b1ff;
+  border: 1px solid #66b1ff;
+}
+.login-form .item:nth-child(n + 1) {
+  margin-top: 20px;
+}
