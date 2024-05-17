@@ -619,7 +619,7 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
 
 ## 08. 案例-时钟.html的拆分
 
-
+。。
 
 
 
@@ -746,7 +746,6 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
      console.log(result)
      ```
 
-     
 
 ### 小结
 
@@ -773,7 +772,7 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
    <details>
    <summary>答案</summary>
    <ul>
-   <li>导出：module.exports = {},导入：require('模块名或路径')</li>
+   <li>导出：module.exports = {},  导入：require('模块名或路径')</li>
    </ul>
    </details>
 
@@ -788,17 +787,11 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
 
 
 
-
-
-
-
 ## 02.ECMAScript标准-默认导出和导入
 
 ### 目标
 
 掌握 ECMAScript 标准语法中，默认导出和导入的使用
-
-
 
 ### 讲解
 
@@ -1436,7 +1429,7 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
 
 
 
-4. Webpack 的作用：把静态模块内容，压缩，这个和，转译等（前端工程化）
+4. Webpack 的作用：把静态模块内容，压缩，整合，转译等（前端工程化）
 
    * 把 less/sass 转成 css 代码
    * 把 ES6+ 降级成 ES5 等
@@ -1521,7 +1514,7 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
    </ul>
    </details>
 
-2. Webpack 怎么用？
+2. <div style="color:red">Webpack 怎么用？</div>
 
    <details>
    <summary>答案</summary>
@@ -1539,7 +1532,7 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
    </ul>
    </details>
 
-4. Webpack 默认入口和出口？
+4. <div style="color:red">Webpack 默认入口和出口？</div>
 
    <details>
    <summary>答案</summary>
@@ -1652,7 +1645,7 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
 
    3. 运行自定义命令，让 Webpack 打包 JS 代码
 
-   4. 手动复制 public/login.html 到 dist 下，手动引入打包后的 JS 代码文件，运行 dist/login.html 在浏览器查看效果
+   4. 手动复制 public/login.html 到 dist 下，手动引入打包后的 JS 代码文件，运行 dist/login.html 在浏览器查看效果。（见第100p。说实话有点蠢）
 
       ![image-20230518101404084](images/image-20230518101404084.png)
 
@@ -1790,10 +1783,6 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
 
    4. 打包后运行 dist/login/index.html 观察效果，看看准备好的样式是否作用在网页上
 
-
-
-
-
 ### 小结
 
 1. 加载器的作用是什么?
@@ -1804,6 +1793,8 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
    <li>让 Webpack 识别更多的代码内容类型</li>
    </ul> 
    </details>
+
+
 
 ## 06.优化-提取 css 代码
 
@@ -1851,19 +1842,13 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
       };
       ```
 
-      
-
    3. 打包后观察效果
 
    4. 注意：不能和 style-loader 一起使用
 
+      因为style-loader是把css代码打包到html文件里的，而MiniCssExtractPlugin是把css代码打包到单独的css文件里的
+
    5. 好处：css 文件可以被浏览器缓存，减少 JS 文件体积，让浏览器并行下载 css 和 js 文件
-
-
-
-
-
-### 小结
 
 
 
@@ -1911,13 +1896,6 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
       ```
 
    3. 打包后观察 css 文件内自己代码是否被压缩了
-
-
-
-
-
-
-### 小结
 
 
 
@@ -2218,6 +2196,23 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
 
 
 
+#### 问题：
+
+为什么不按照官网的 [webpack-dev-server教程](https://webpack.docschina.org/guides/development/#using-webpack-dev-server) 使用以下代码？
+
+```js
+module.exports = {
+  // ...
+    devServer: {
+    static: './dist',
+  },
+}
+```
+
+通过官网的 [devServer.static 教程](https://webpack.docschina.org/configuration/dev-server/#devserverstatic) 可知，从目录提供静态文件的默认选项是 'public' 文件夹
+
+可以把它设置成false，就不使用现有的任何文件，而选择使用在内存中的文件。根据 `plugins: new HtmlWebpackPlugin` 中的 filename （即输出文件夹）来找到输出的路径。直接加在 localhost:8080 后面。
+
 ### 小结
 
 1. webpack-dev-server 的作用?
@@ -2272,7 +2267,7 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
      },
      ```
 
-4. 注意：命令行设置的优先级高于配置文件中的，推荐用命令行设置
+4. 注意：命令行设置的优先级高于配置文件中的，推荐用命令行设置。 并且用命令行设置就不用每次运行的时候去 webpack.config.js 配置文件设置 mode 选项了。
 
 5. 体验：在 build 命令后 修改 mode 的值，打包输出观察打包后的 js 文件内容
 
@@ -2291,17 +2286,17 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
 
 
 
-## 12.Webpack 打包模式的应用
+## 12.Webpack 打包模式的应用:
+
+​								—— css和less的不同打包方式
 
 ### 目标
 
 了解 Webpack 打包模式的应用
 
-
-
 ### 讲解
 
-1. 需求：在开发模式下用 style-loader 内嵌更快，在生产模式下提取 css 代码
+1. 需求：在**开发模式development mode**下用 style-loader 内嵌(内嵌到js文件中去)更快，同时在**生产模式production mode**下提取 css 代码
 
 2. [方案](https://webpack.docschina.org/configuration/mode/)[1](https://webpack.docschina.org/configuration/mode/)：webpack.config.js 配置导出函数，但是局限性大（只接受 2 种模式）
 
@@ -2325,8 +2320,10 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
 
    ![image-20230518104016802](images/image-20230518104016802.png)
 
-   3.在 webpack.config.js 区分不同环境使用不同配置
+   >  cross-env NODE_ENV="customed_name" 中 customed_name 是可以自定义的，并且和 webpack 的 mode的name没有关系。
 
+   3.在 webpack.config.js 区分不同环境使用不同配置
+   
    ```js
    module: {
        rules: [
@@ -2348,15 +2345,7 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
      },
    ```
 
-   
-
    4.重新打包观察两种配置区别
-
-   
-
-
-
-### 小结
 
 
 
@@ -2365,8 +2354,6 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
 ### 目标
 
 前端项目中，开发模式下打印语句生效，生产模式下打印语句失效
-
-
 
 ### 讲解
 
@@ -2399,20 +2386,11 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
 
    
 
-
-
-
-### 小结
-
-
-
-## 14.Webpack 开发环境调错 source map
+## 14.Webpack 开发环境调错: source map
 
 ### 目标
 
 在开发环境如何精准定位到报错源码位置
-
-
 
 ### 讲解
 
@@ -2435,7 +2413,22 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
 
 4. 注意：source map 适用于开发环境，不要在生产环境使用（防止被轻易查看源码位置）
 
+   ​	*开发环境下使用 sourcemap 选项* :
 
+   ```js
+   const config = {
+     // ... //原本在module.exports中的代码
+   }
+   
+   if (process.env.NODE_ENV === 'development') {
+     config.devtool = 'inline-source-map'
+   }
+   
+   // 单独进行导出
+   module.exports = config
+   ```
+
+   
 
 ### 小结
 
@@ -2582,7 +2575,7 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
 
 
 
-### 小结
+# 看到这里。后面是啥啊。
 
 
 
@@ -2596,8 +2589,10 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
 
 ### 讲解
 
-1. 概念：[单页面](https://developer.mozilla.org/zh-CN/docs/Glossary/SPA)：单个 html 文件，切换 DOM 的方式实现不同业务逻辑展示，后续 Vue/React 会学到
+1. 概念：
 
+   [单页面](https://developer.mozilla.org/zh-CN/docs/Glossary/SPA)：单个 html 文件，切换 DOM 的方式实现不同业务逻辑展示，后续 Vue/React 会学到
+   
    多页面：多个 html 文件，切换页面实现不同业务逻辑展示
 
 
@@ -2641,10 +2636,6 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
 
 
 
-### 小结
-
-
-
 ## 18.案例-发布文章页面打包
 
 ### 目标
@@ -2665,9 +2656,6 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
 
    3.打包观察效果
 
-   
-
-### 小结
 
 
 
@@ -2714,10 +2702,4 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
    
 
    2.打包观察效果
-
-   
-
-### 小结
-
-
 
