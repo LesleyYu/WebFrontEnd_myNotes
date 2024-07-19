@@ -1,0 +1,27 @@
+{
+  "name": "typescript-tutorial",
+  "version": "1.0.0",
+  "description": "TypeScript 开源教程，介绍基本概念和用法，面向初学者。",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "loppo --site \"TypeScript 教程\" --id typescript --theme wangdoc",
+    "build-and-commit": "npm run build && npm run commit",
+    "commit": "gh-pages --dist dist --dest dist/typescript --branch master --repo git@github.com:wangdoc/website.git",
+    "chapter": "loppo chapter",
+    "server": "loppo server"
+  },
+  "keywords": [
+    "TypeScript",
+    "tutorial"
+  ],
+  "author": "Ruan Yifeng",
+  "license": "CC-BY-SA-4.0",
+  "dependencies": {
+    "gh-pages": "^5.0.0",
+    "loppo": "^0.6.25",
+    "loppo-theme-wangdoc": "^0.6.6"
+  }
+}

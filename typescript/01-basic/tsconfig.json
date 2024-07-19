@@ -1,0 +1,6 @@
+{
+  "files": ["一个错误的TypeScript脚本.ts"],
+  "compilerOptions": {
+    "outFile": "01-app.js"
+  }
+}

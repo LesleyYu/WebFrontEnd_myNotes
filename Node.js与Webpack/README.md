@@ -1,4 +1,4 @@
-# 01_Node.js入门
+# Node.js入门
 
 ## 知识点自测
 
@@ -623,7 +623,7 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
 
 
 
-# 02_Node.js模块化
+# Node.js模块化
 
 ## 知识点自测
 
@@ -1300,8 +1300,6 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
 
    ![image-20230331171411780](images/image-20230331171411780.png)
 
-
-
 ### 小结
 
 1. 安装本地软件包的命令是什么？
@@ -1313,7 +1311,9 @@ res.setHeader('Content-Type', 'text/plain;charset=utf-8')
    </ul>
    </details>
 
-# 03_Webpack模块打包工具
+
+
+# Webpack模块打包工具
 
 ## 知识点自测
 
@@ -2702,4 +2702,3 @@ module.exports = {
    
 
    2.打包观察效果
-
